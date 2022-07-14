@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status = "WARN">
+<Properties>
+    <property name="pattern_file">
+        %d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{5}- %msg%n
+    </property>
+    <property name="pattern_console">
+        %d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{5}- %msg%n
+    </property>
+</Properties>
+<Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+        <PatternLayout pattern="${pattern_console}"/>
+    </Console>
+    <RollingFile name="RollingFile" fileName="logs/log_root.txt" append="true"
+                 filePattern = "logs/${date:yyyy-MM-dd}/%d{yyyy-MM-dd_HH-mm}_%i.txt">
+        <PatternLayout pattern="${pattern_file}"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy/>
+            <SizeBasedTriggeringPolicy size="250 KB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="1"/>
+    </RollingFile>
+</Appenders>
+<Loggers>
+    <Root level = "INFO">
+        <AppenderRef ref = "Console"/>
+        <AppenderRef ref = "RollingFile" level = "WARN"/>
+    </Root>
+</Loggers>
+</Configuration>
